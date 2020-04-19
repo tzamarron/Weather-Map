@@ -58,7 +58,7 @@
             <!-- Day 1 card -->
             <div class="card border-dark" style="width: 12rem;">
                 <div class="card-body text-center">
-                    <img src="#" alt="weather status">
+                    <img alt="weather status" id="weather-icon1">
                     <h3 class="card-title" id="day1"></h3>
                     <h4 class="my-2" id="hiLow1"></h4>
                     <p class="card-text font-weight-bold" id="summary1"></p>
@@ -71,7 +71,7 @@
             <!-- Day 2 card -->
             <div class="card border-dark" style="width: 12rem;">
                 <div class="card-body text-center">
-                    <img src="#" alt="weather status">
+                    <img alt="weather status" id="weather-icon2">
                     <h3 class="card-title" id="day2"></h3>
                     <h4 class="card-subtitle my-2" id="hiLow2"></h4>
                     <p class="card-text font-weight-bold" id="summary2"></p>
@@ -84,7 +84,7 @@
             <!-- Day 3 card -->
             <div class="card border-dark" style="width: 12rem;">
                 <div class="card-body text-center">
-                    <img src="#" alt="weather status">
+                    <img alt="weather status" id="weather-icon3">
                     <h3 class="card-title" id="day3"></h3>
                     <h4 class="card-subtitle my-2" id="hiLow3"></h4>
                     <p class="card-text font-weight-bold" id="summary3"></p>
@@ -128,50 +128,17 @@
 $(document).ready(function( ) {
     // Variables
     let icons = [
-        {
-            type: "clear-day",
-            src: "icons/Sun.svg",
-        },
-        {
-            type: "clear-night",
-            icon: "icons/Moon-And-Stars.svg",
-        },
-        {
-            type: "rain",
-            icon: "icons/Rain.svg",
-        },
-        {
-            type: "snow",
-            icon: "icons/Snow.svg",
-        },
-        {
-            type: "sleet",
-            icon: "icons/Sleet.svg",
-        },
-        {
-            type: "wind",
-            icon: "icons/Windy-Weather.svg",
-        },
-        {
-            type: "fog day",
-            icon: "icons/Fog-Day.svg",
-        },
-        {
-            type:"fog night",
-            icon: "icons/Fog-Night.svg"
-        },
-        {
-            type: "cloudy",
-            icon: "icons/Cloud.svg",
-        },
-        {
-            type: "partly-cloudy-night",
-            icon: "icons/Partly-Cloudy-Night.svg",
-        },
-        {
-            type: "partly-cloudy-night",
-            icon: "icons/Partly-Cloudy-Day.svg",
-        }
+        { type: "clear-day", src: "icons/Sun.svg" },
+        { type: "clear-night", src: "icons/Moon-And-Stars.svg" },
+        { type: "rain", src: "icons/Rain.svg" },
+        { type: "snow", src: "icons/Snow.svg" },
+        { type: "sleet", src: "icons/Sleet.svg" },
+        { type: "wind", src: "icons/Windy-Weather.svg" },
+        { type: "fog day", src: "icons/Fog-Day.svg" },
+        { type:"fog night", src: "icons/Fog-Night.svg" },
+        { type: "cloudy", src: "icons/Cloud.svg" },
+        { type: "partly-cloudy-night", src: "icons/Partly-Cloudy-Night.svg" },
+        { type: "partly-cloudy-night", src: "icons/Partly-Cloudy-Day.svg" }
     ];
     let currPageInfo = {
             c_hilow: $("#hiLowC1"),
@@ -180,6 +147,7 @@ $(document).ready(function( ) {
         };
     let dayPageInfo = [
         {
+            c_icon: $("#weather-icon1"),
             c_day: $("#day1"),
             c_hilow: $("#hiLow1"),
             c_summary: $("#summary1"),
@@ -188,6 +156,7 @@ $(document).ready(function( ) {
             c_precip: $("#precip1")
         },
         {
+            c_icon: $("#weather-icon2"),
             c_day: $("#day2"),
             c_hilow: $("#hiLow2"),
             c_summary: $("#summary2"),
@@ -196,6 +165,7 @@ $(document).ready(function( ) {
             c_precip: $("#precip2")
         },
         {
+            c_icon: $("#weather-icon3"),
             c_day: $("#day3"),
             c_hilow: $("#hiLow3"),
             c_summary: $("#summary3"),
@@ -207,6 +177,11 @@ $(document).ready(function( ) {
     let firstDay = 0;
     let gLat = 29.4241;
     let gLng = -98.4936;
+
+    // Function to determine which icon to use
+    let useIcon = function (condition) {
+        let result = icons.filter(current => )
+    }
 
     // Creates Map
     mapboxgl.accessToken = mapboxToken;
@@ -250,6 +225,7 @@ $(document).ready(function( ) {
                 let dayinfo = data.daily.data;
 
                 // Appending data to HTML
+                // day.c_icon.setAttribute("src",)
                 day.c_hilow.html("<strong>H</strong> " + (dayinfo[firstDay].temperatureHigh).toFixed(0) + "\xB0/ <strong>L</strong> " + (dayinfo[firstDay].temperatureLow).toFixed(0) + "\xB0");
                 day.c_summary.html(dayinfo[firstDay].summary);
                 day.c_humidity.html("<strong>Humidity: </strong>" + dayinfo[firstDay].humidity * 100 + "&#xff05;" );
