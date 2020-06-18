@@ -20,6 +20,18 @@
             font-size: 20px;
         }
 
+        #mainContainer {
+            background-color: cadetblue;
+        }
+
+        .card-body {
+            background-color: aliceblue;
+        }
+
+        img {
+            height: fit-content;
+        }
+
     </style>
 
     <title>Weather</title>
@@ -27,7 +39,7 @@
 </head>
 <body>
 
-<main class="container-fluid m-0 p-0">
+<main class="container-fluid m-0 p-0" id="mainContainer">
 
     <!-- Top Header -->
     <div class="row d-flex justify-content-center" id="topRow">
@@ -38,20 +50,20 @@
         <!-- Current Location End -->
 
         <!-- Current Weather -->
-        <a class="bg-transparent" data-toggle="collapse" href="#forecast3day" role="button" aria-expanded="false" aria-controls="forecast3day">
+<!--        <a class="bg-transparent" data-toggle="collapse" href="#forecast3day" role="button" aria-expanded="false" aria-controls="forecast3day">-->
         <div class="col-12 text-center font-weight-bold" id="currWeather">
             Currently :
             <div class="d-inline-block mx-3" id="hiLowC1"></div>
             <div class="d-inline-block mx-3" id="summaryC1"></div>
             <div class="d-inline-block mx-3" id="precipC1"></div>
         </div>
-        </a>
+<!--        </a>-->
         <!-- Current Weather End -->
     </div>
     <!-- Top Header End -->
 
     <!-- 3 Day Forecast -->
-    <section class="row accordion collapse" id="forecast3day">
+<!--    <section class="row accordion collapse" id="forecast3day">-->
 
         <div class="card-deck mx-auto col-12">
 
@@ -94,7 +106,7 @@
                 </div>
             </div>
         </div>
-    </section>
+<!--    </section>-->
     <!--     3 Day Forecast End -->
 
     <!-- Weather Map -->
@@ -138,7 +150,7 @@ $(document).ready(function( ) {
         { type:"fog night", src: "icons/Fog-Night.svg" },
         { type: "cloudy", src: "icons/Cloud.svg" },
         { type: "partly-cloudy-night", src: "icons/Partly-Cloudy-Night.svg" },
-        { type: "partly-cloudy-night", src: "icons/Partly-Cloudy-Day.svg" }
+        { type: "partly-cloudy-day", src: "icons/Partly-Cloudy-Day.svg" }
     ];
     let currPageInfo = {
             c_hilow: $("#hiLowC1"),
@@ -177,11 +189,6 @@ $(document).ready(function( ) {
     let firstDay = 0;
     let gLat = 29.4241;
     let gLng = -98.4936;
-
-    // Function to determine which icon to use
-    let useIcon = function (condition) {
-        let result = icons.filter(current => )
-    }
 
     // Creates Map
     mapboxgl.accessToken = mapboxToken;
@@ -224,8 +231,20 @@ $(document).ready(function( ) {
                 // Daily Info path
                 let dayinfo = data.daily.data;
 
+                // Function to determine which icon to use
+                function isIcon(condition){
+                    for (var i = 0; i < icons.length;i++){
+                        if (icons[i].type === condition){
+                            return icons[i];
+                        }
+                    }
+                }
+
+                // Store icon needed
+                let dayIcon = isIcon(dayinfo[0].icon).src
+
                 // Appending data to HTML
-                // day.c_icon.setAttribute("src",)
+                day.c_icon[0].setAttribute("src", dayIcon)
                 day.c_hilow.html("<strong>H</strong> " + (dayinfo[firstDay].temperatureHigh).toFixed(0) + "\xB0/ <strong>L</strong> " + (dayinfo[firstDay].temperatureLow).toFixed(0) + "\xB0");
                 day.c_summary.html(dayinfo[firstDay].summary);
                 day.c_humidity.html("<strong>Humidity: </strong>" + dayinfo[firstDay].humidity * 100 + "&#xff05;" );
